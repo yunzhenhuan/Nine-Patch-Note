@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-	<jsp:useBean id="pagination" class="com.wgh.tools.MyPagination" scope="session"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<jsp:useBean id="pagination" class="com.wgh.tools.MyPagination" scope="session" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -42,15 +41,15 @@ var i=0;	//标记变量，用于记录当前页共几条日记
 </script>
 
 </head>
-<body  bgcolor="#F0F0F0">
-<div id="box">
-<%@ include file="top.jsp" %>
-<%@ include file="register.jsp" %>
-<c:if test="${!empty requestScope.diaryList}">
-<c:forEach items="${requestScope.diaryList}" var="diaryList" varStatus="id">
-<script type="text/javascript">
+<body bgcolor="#F0F0F0">
+	<div id="box">
+		<%@ include file="top.jsp"%>
+		<%@ include file="register.jsp"%>
+		<c:if test="${!empty requestScope.diaryList}">
+			<c:forEach items="${requestScope.diaryList}" var="diaryList" varStatus="id">
+				<script type="text/javascript">
 i++;	//标记变量，用于记录当前页共几条日记
-function rotate${id.count }(){
+function rotate${id.count }(){  
 		var param${id.count } = {
 			right: document.getElementById("rotRight${id.count }"),
 			left: document.getElementById("rotLeft${id.count }"),
@@ -136,38 +135,42 @@ function rotate${id.count }(){
 		};		
 }
 </script>
-	<div style="border-bottom-color:#CBCBCB;padding:5px;border-bottom-style:dashed;border-bottom-width: 1px;margin: 10px 20px;color:#0F6548">
-	<font color="#CE6A1F" style="font-weight: bold;font-size:14px;">${diaryList.username}</font>&nbsp;&nbsp;发表九宫格日记：<b>${diaryList.title}</b></div>
-	<div style="margin:10px 10px 0px 10px;background-color:#FFFFFF; border-bottom-color:#CBCBCB;border-bottom-style:dashed;border-bottom-width: 1px;">
-		<div id="diaryImg${id.count }" style="border:1px #DDDDDD solid;width:60px;background-color:#EEEEEE;">
-		
-			<div id="control${id.count }" style="display:none;padding: 10px;">
-				<%String url=request.getRequestURL().toString();
-				url=url.substring(0,url.lastIndexOf("/"));%>
-				<a href="#" onClick="zoom('${id.count }','${diaryList.address }')">收缩</a>
-		 		&nbsp;&nbsp;  <a href="<%=url %>/images/diary/${diaryList.address }.png" target="_blank">查看原图</a>
-				&nbsp;&nbsp;<a id="rotLeft${id.count }" href="#" >左转</a>
-				&nbsp;&nbsp;<a id="rotRight${id.count }" href="#">右转</a>
-				<a id="reDefault${id.count }" href="#" style="display:none">恢复默认</a>
-			</div>
-			<img id="diary${id.count }" src="images/diary/${diaryList.address }scale.jpg" 
-				style="cursor: url(images/ico01.ico);" 
-				onClick="zoom('${id.count }','${diaryList.address }')">
-			<canvas id="canvas${id.count }" style="display:none;" onClick="zoom('${id.count }','${diaryList.address }')"></canvas>
-		</div>
-		<div style="padding:10px;background-color:#FFFFFF;text-align:right;color:#999999;">
-			发表时间：<fmt:formatDate value="${diaryList.writeTime}" type="both" pattern="yyyy-MM-dd HH:mm:ss"/> 
-			<c:if test="${sessionScope.userName==diaryList.username}">
-			<a href="DiaryServlet?action=delDiary&id=${diaryList.id }&url=${requestScope.url}&imgName=${diaryList.address }">[删除]</a> 
-			</c:if>
-		</div>
-	</div>
-</c:forEach>
-</c:if>
-<c:if test="${empty requestScope.diaryList}">
+				<div
+					style="border-bottom-color:#CBCBCB;padding:5px;border-bottom-style:dashed;border-bottom-width: 1px;margin: 10px 20px;color:#0F6548">
+					<font color="#CE6A1F" style="font-weight: bold;font-size:14px;">${diaryList.username}</font>&nbsp;&nbsp;发表九宫格日记：<b>${diaryList.title}</b>
+				</div>
+				<div
+					style="margin:10px 10px 0px 10px;background-color:#FFFFFF; border-bottom-color:#CBCBCB;border-bottom-style:dashed;border-bottom-width: 1px;">
+					<div id="diaryImg${id.count }" style="border:1px #DDDDDD solid;width:60px;background-color:#EEEEEE;">
+
+						<div id="control${id.count }" style="display:none;padding: 10px;">
+							<%
+								String url = request.getRequestURL().toString();
+										url = url.substring(0, url.lastIndexOf("/"));
+							%>
+							<a href="#" onClick="zoom('${id.count }','${diaryList.address }')">收缩</a> &nbsp;&nbsp; <a
+								href="<%=url %>/images/diary/${diaryList.address }.png" target="_blank">查看原图</a> &nbsp;&nbsp;<a
+								id="rotLeft${id.count }" href="#">左转</a> &nbsp;&nbsp;<a id="rotRight${id.count }" href="#">右转</a> <a
+								id="reDefault${id.count }" href="#" style="display:none">恢复默认</a>
+						</div>
+						<img id="diary${id.count }" src="images/diary/${diaryList.address }scale.jpg"
+							style="cursor: url(images/ico01.ico);" onClick="zoom('${id.count }','${diaryList.address }')">
+						<canvas id="canvas${id.count }" style="display:none;" onClick="zoom('${id.count }','${diaryList.address }')"></canvas>
+					</div>
+					<div style="padding:10px;background-color:#FFFFFF;text-align:right;color:#999999;">
+						发表时间：
+						<fmt:formatDate value="${diaryList.writeTime}" type="both" pattern="yyyy-MM-dd HH:mm:ss" />
+						<c:if test="${sessionScope.userName==diaryList.username}">
+							<a href="DiaryServlet?action=delDiary&id=${diaryList.id }&url=${requestScope.url}&imgName=${diaryList.address }">[删除]</a>
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
+		</c:if>
+		<c:if test="${empty requestScope.diaryList}">
 暂无九宫格日记！
 </c:if>
-<script type="text/javascript">
+		<script type="text/javascript">
 var flag=new Array(i);//定义一个标记数组
 window.onload = function(){
 	while(i>0){
@@ -177,10 +180,10 @@ window.onload = function(){
 	}
 }
 </script>
-	<div style="background-color: #FFFFFF;">
-	 <%=pagination.printCtrl(Integer.parseInt(request.getAttribute("Page").toString()),"DiaryServlet?action="+request.getAttribute("url"),"")%> 
+		<div style="background-color: #FFFFFF;">
+			<%=pagination.printCtrl(Integer.parseInt(request.getAttribute("Page").toString()), "DiaryServlet?action=" + request.getAttribute("url"), "")%>
+		</div>
+		<%@ include file="bottom.jsp"%>
 	</div>
-<%@ include file="bottom.jsp" %>
-</div>
 </body>
 </html>
